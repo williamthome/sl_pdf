@@ -24,3 +24,6 @@ sl_pdf-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Extensions
+.elixir_ls
