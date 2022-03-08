@@ -27,3 +27,6 @@ sl_pdf-*.tar
 
 # Extensions
 .elixir_ls
+
+# Misc
+example.pdf

@@ -8,8 +8,10 @@ defmodule SlPdf.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: SlPdf.Worker.start_link(arg)
-      # {SlPdf.Worker, arg}
+      # Start the ChromicPDF supervisor
+      ChromicPDF,
+      # Pdf supervisor
+      SlPdf.PdfSup
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
