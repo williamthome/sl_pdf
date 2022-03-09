@@ -29,5 +29,5 @@ sl_pdf-*.tar
 .elixir_ls
 
 # Misc
-example.pdf
+*.pdf
 *.beam
