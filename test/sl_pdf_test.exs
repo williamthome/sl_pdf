@@ -2,7 +2,7 @@ defmodule SlPdfTest do
   use ExUnit.Case
   doctest SlPdf
 
-  test "greets the world" do
-    assert SlPdf.hello() == :world
+  test "prints pdf" do
+    assert SlPdf.print_to_pdf() == :ok
   end
 end
