@@ -1,5 +1,9 @@
 -module(pdf).
 
+-import('Elixir.SlPdf', [
+    print_to_pdf/0
+]).
+
 -export([
     load/0, load/1, load/2, load/3,
     test/0
@@ -42,7 +46,7 @@ load(ElixirPath, LocalPath, BinFolder) ->
 
 test() ->
     ok = load(),
-    ok = 'Elixir.SlPdf.Pdf':print_to_pdf(),
+    ok = print_to_pdf(),
     io:format("Pdf generated~n").
 
 %%%=============================================================================

@@ -11,7 +11,7 @@ defmodule SlPdf.Application do
       # Start the ChromicPDF supervisor
       ChromicPDF,
       # Pdf supervisor
-      SlPdf.PdfSup
+      {SlPdf, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
