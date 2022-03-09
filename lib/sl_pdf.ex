@@ -8,7 +8,7 @@ defmodule SlPdf do
   end
 
   def print_to_pdf(
-    content \\ "<div>Hello, World!</div>",
+    content \\ SlPdfWeb.View.hello_world,
     callback \\ "example.pdf"
   ), do: GenServer.call(__MODULE__, {:print_to_pdf, content, callback})
 
