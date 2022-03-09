@@ -4,7 +4,7 @@
     print_to_pdf/0, print_to_pdf/1, print_to_pdf/2
 ]).
 
--import('Elixir.SlPdfWeb.View', [
+-import('Elixir.SlPdfWeb.PdfView', [
     hello_world/0, greeting/1
 ]).
 
