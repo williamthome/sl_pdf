@@ -10,7 +10,7 @@
 
 -export([
     load/0, load/1, load/2, load/3,
-    test/0, test/1,
+    test/0, test/1, test/2,
 
     template_hello_world/0,
     template_greeting/1,
@@ -58,7 +58,6 @@ template_hello_world() ->
 template_greeting(Name) ->
     greeting(Name).
 
-
 template_loop() ->
     List = ["car", "plane", "something", {x, "x"}, {y, "y"}],
     template_loop(List).
@@ -67,11 +66,14 @@ template_loop(List) ->
     loop(List).
 
 test() ->
-    test(template_hello_world()).
+    test(<<"example.pdf">>).
 
-test(Template) ->
+test(Callback) ->
+    test(template_hello_world(), Callback).
+
+test(Template, Callback) when is_binary(Template) andalso is_binary(Callback) ->
     %% Remember to run load/0 before test
-    io:format("Pdf generated: ~p~n", [print_to_pdf(Template)]).
+    io:format("Pdf generated: ~p~n", [print_to_pdf(Template, Callback)]).
 
 %%%=============================================================================
 %%% Internal functions
