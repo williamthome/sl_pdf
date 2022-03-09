@@ -1,0 +1,11 @@
+ <ul>
+  <%= Enum.with_index(list) |> Enum.map(fn({x, index}) -> %>
+    <%= if is_tuple(x) do %>
+      <% {k, v} = x %>
+      <li><%= index %>) <%= k %>: <%= v %></li>
+    <% else %>
+      <% this = x %>
+      <li><%= index %>) <%= this %></li>
+    <% end %>
+  <% end) %>
+</ul>

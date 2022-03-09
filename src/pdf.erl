@@ -5,13 +5,16 @@
 ]).
 
 -import('Elixir.SlPdfWeb.PdfView', [
-    hello_world/0, greeting/1
+    hello_world/0, greeting/1, loop/1
 ]).
 
 -export([
     load/0, load/1, load/2, load/3,
-    template_hello_world/0, template_greeting/1,
-    test/0, test/1
+    test/0, test/1,
+
+    template_hello_world/0,
+    template_greeting/1,
+    template_loop/0, template_loop/1
 ]).
 
 load() ->
@@ -54,6 +57,14 @@ template_hello_world() ->
 
 template_greeting(Name) ->
     greeting(Name).
+
+
+template_loop() ->
+    List = ["car", "plane", "something", {x, "x"}, {y, "y"}],
+    template_loop(List).
+
+template_loop(List) ->
+    loop(List).
 
 test() ->
     test(template_hello_world()).
