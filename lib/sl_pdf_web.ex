@@ -1,15 +1,15 @@
 defmodule SlPdfWeb do
-  defmacro __using__(_opts) do
-    quote do
+  defmacro __using__(opts) do
+    quote(bind_quoted: [opts: opts]) do
       require EEx
-      @root "lib/sl_pdf_web/templates/"
-      @ext ".eex"
-      EEx.function_from_file(
-        :def,
-        :hello_world,
-        @root <> "hello_world.html" <> @ext,
-        []
-      )
+
+      root = Keyword.get(opts, :root, "lib/sl_pdf_web/templates/")
+      ext = Keyword.get(opts, :ext, ".eex")
+      templates = Keyword.get(opts, :templates, [])
+
+      for {function, file, assigns} <- templates do
+        EEx.function_from_file(:def, function, root <> file <> ext, assigns)
+      end
     end
   end
 end
