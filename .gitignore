@@ -30,3 +30,4 @@ sl_pdf-*.tar
 
 # Misc
 example.pdf
+*.beam
