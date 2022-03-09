@@ -1,12 +1,17 @@
 -module(pdf).
 
 -import('Elixir.SlPdf', [
-    print_to_pdf/0
+    print_to_pdf/0, print_to_pdf/1, print_to_pdf/2
+]).
+
+-import('Elixir.SlPdfWeb.View', [
+    hello_world/0, greeting/1
 ]).
 
 -export([
     load/0, load/1, load/2, load/3,
-    test/0
+    template_hello_world/0, template_greeting/1,
+    test/0, test/1
 ]).
 
 load() ->
@@ -44,10 +49,18 @@ load(ElixirPath, LocalPath, BinFolder) ->
     ],
     start_apps(Apps).
 
+template_hello_world() ->
+    hello_world().
+
+template_greeting(Name) ->
+    greeting(Name).
+
 test() ->
-    ok = load(),
-    ok = print_to_pdf(),
-    io:format("Pdf generated~n").
+    test(template_hello_world()).
+
+test(Template) ->
+    %% Remember to run load/0 before test
+    io:format("Pdf generated: ~p~n", [print_to_pdf(Template)]).
 
 %%%=============================================================================
 %%% Internal functions
