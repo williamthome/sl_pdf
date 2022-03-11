@@ -12,6 +12,8 @@
     load/1, load/2, load/3,
     test/0, test/1, test/2,
 
+    print/2,
+
     template_hello_world/0,
     template_greeting/1,
     template_loop/0, template_loop/1
@@ -48,6 +50,9 @@ load(ElixirPath, LocalPath, BinFolder) ->
     ],
     start_apps(Apps).
 
+print(Template, Callback) ->
+    print_to_pdf(Template, Callback).
+
 template_hello_world() ->
     hello_world().
 
@@ -69,7 +74,7 @@ test(Callback) ->
 
 test(Template, Callback) when is_binary(Template) andalso is_binary(Callback) ->
     %% Remember to run load/0 before test
-    io:format("Pdf generated: ~p~n", [print_to_pdf(Template, Callback)]).
+    io:format("Pdf generated: ~p~n", [print(Template, Callback)]).
 
 %%%=============================================================================
 %%% Internal functions
