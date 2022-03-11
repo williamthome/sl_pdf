@@ -1,21 +1,22 @@
 # SlPdf
 
-**TODO: Add description**
+**A pdf generator for erlang depending on elixir**
 
-## Installation
+## Setup
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `sl_pdf` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:sl_pdf, "~> 0.1.0"}
-  ]
-end
+Setup the elixir_path in the ```run.config``` file as:
+```
+elixir_path=/your/elixir/path
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/sl_pdf>.
+## Up and running
 
+```bash
+$ ./run
+```
+
+## Generating the pdf
+
+```erlang
+pdf:print(Template, Filename)
+```
