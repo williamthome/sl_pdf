@@ -9,17 +9,13 @@
 ]).
 
 -export([
-    load/0, load/1, load/2, load/3,
+    load/1, load/2, load/3,
     test/0, test/1, test/2,
 
     template_hello_world/0,
     template_greeting/1,
     template_loop/0, template_loop/1
 ]).
-
-load() ->
-    ElixirPath = "/home/williamthome/.asdf/installs/elixir/1.13.1/lib/",
-    load(ElixirPath).
 
 load(ElixirPath) ->
     LocalPath = "../_build/dev/lib/",
