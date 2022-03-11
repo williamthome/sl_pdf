@@ -20,7 +20,7 @@ defmodule SlPdf do
   @impl true
   def handle_call({:print_to_pdf, content, callback}, _from, state) do
     pdf =
-      [content: content, size: :a4]
+      [content: content, size: :a4, landscape: true]
       |> ChromicPDF.Template.source_and_options()
       |> ChromicPDF.print_to_pdf(output: callback)
     {:reply, pdf, state}

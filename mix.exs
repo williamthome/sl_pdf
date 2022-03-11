@@ -22,7 +22,11 @@ defmodule SlPdf.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:chromic_pdf, "~> 1.1"}
+      {
+        :chromic_pdf,
+        git: "https://github.com/williamthome/chromic_pdf.git",
+        branch: "main"
+      }
     ]
   end
 end
