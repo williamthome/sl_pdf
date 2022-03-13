@@ -1,4 +1,6 @@
 defmodule SlPdf.Application do
+  @chromic_pdf_opts Application.compile_env(:sl_pdf, ChromicPDF, [])
+
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -9,7 +11,7 @@ defmodule SlPdf.Application do
   def start(_type, _args) do
     children = [
       # Start the ChromicPDF supervisor
-      ChromicPDF,
+      {ChromicPDF, @chromic_pdf_opts},
       # Pdf supervisor
       {SlPdf, []}
     ]
