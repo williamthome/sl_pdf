@@ -1,33 +1,16 @@
--module(pdf).
+-module(sl_report).
 
--import('Elixir.SlPdf', [
-    print_to_pdf/0, print_to_pdf/1, print_to_pdf/2
-]).
+-export([ start/1, start/2, start/3 ]).
 
--import('Elixir.SlPdfWeb.PdfView', [
-    hello_world/0, greeting/1, loop/1
-]).
-
--export([
-    load/1, load/2, load/3,
-    test/0, test/1, test/2,
-
-    print/2,
-
-    template_hello_world/0,
-    template_greeting/1,
-    template_loop/0, template_loop/1
-]).
-
-load(ElixirPath) ->
+start(ElixirPath) ->
     LocalPath = "../_build/dev/lib/",
-    load(ElixirPath, LocalPath).
+    start(ElixirPath, LocalPath).
 
-load(ElixirPath, LocalPath) ->
+start(ElixirPath, LocalPath) ->
     BinFolder = "/ebin/",
-    load(ElixirPath, LocalPath, BinFolder).
+    start(ElixirPath, LocalPath, BinFolder).
 
-load(ElixirPath, LocalPath, BinFolder) ->
+start(ElixirPath, LocalPath, BinFolder) ->
     MainApps = [
         compiler
     ],
@@ -41,7 +24,7 @@ load(ElixirPath, LocalPath, BinFolder) ->
         nimble_pool,
         telemetry,
         chromic_pdf,
-        sl_pdf
+        sl_report
     ],
     Apps = [
         MainApps,
@@ -49,32 +32,6 @@ load(ElixirPath, LocalPath, BinFolder) ->
         {{LocalPath, BinFolder}, LocalApps}
     ],
     start_apps(Apps).
-
-print(Template, Callback) ->
-    print_to_pdf(Template, Callback).
-
-template_hello_world() ->
-    hello_world().
-
-template_greeting(Name) ->
-    greeting(Name).
-
-template_loop() ->
-    List = ["car", "plane", "something", {x, "x"}, {y, "y"}],
-    template_loop(List).
-
-template_loop(List) ->
-    loop(List).
-
-test() ->
-    test(<<"example.pdf">>).
-
-test(Callback) ->
-    test(template_hello_world(), Callback).
-
-test(Template, Callback) when is_binary(Template) andalso is_binary(Callback) ->
-    %% Remember to run load/0 before test
-    io:format("Pdf generated: ~p~n", [print(Template, Callback)]).
 
 %%%=============================================================================
 %%% Internal functions

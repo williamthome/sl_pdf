@@ -1,5 +1,5 @@
-defmodule SlPdf.Application do
-  @chromic_pdf_opts Application.compile_env(:sl_pdf, ChromicPDF, [])
+defmodule SlReport.Application do
+  @chromic_pdf_opts Application.compile_env(:sl_report, ChromicPDF, [])
 
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
@@ -13,12 +13,12 @@ defmodule SlPdf.Application do
       # Start the ChromicPDF supervisor
       {ChromicPDF, @chromic_pdf_opts},
       # Pdf supervisor
-      {SlPdf, []}
+      {SlReport, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: SlPdf.Supervisor]
+    opts = [strategy: :one_for_one, name: SlReport.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

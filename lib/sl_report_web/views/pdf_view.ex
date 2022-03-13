@@ -1,11 +1,11 @@
-defmodule SlPdfWeb.PdfView do
+defmodule SlReportWeb.PdfView do
   @templates [
     {:hello_world, "hello_world.html", []},
     {:greeting, "greeting.html", [:name]},
     {:loop, "loop.html", [:list]},
     {:hard_work, "hard_work.html", [:columns, :rows]}
   ]
-  use SlPdfWeb, :pdf_view
+  use SlReportWeb, :pdf_view
 
   def test(n_columns, n_rows) do
     columns = for column <- 1..n_columns, do: "Column#{column}"

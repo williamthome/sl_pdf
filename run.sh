@@ -17,7 +17,7 @@ mix compile
 cd ./src
 
 # Compiles and run Erlang
-erlc pdf.erl
+erlc sl_report.erl sl_report_view.erl sl_report_pdf.erl
 erl \
   -pa "../_build/dev/lib/**/ebin/" \
-  -eval "pdf:load(\"$elixir_path\")"
+  -eval "sl_report:start(\"$elixir_path\")"

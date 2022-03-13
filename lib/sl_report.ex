@@ -1,7 +1,7 @@
-defmodule SlPdf do
+defmodule SlReport do
   use GenServer
 
-  alias SlPdfWeb.PdfView
+  alias SlReportWeb.PdfView
 
   @print_timeout 60_000
 
@@ -12,7 +12,7 @@ defmodule SlPdf do
   end
 
   def print_to_pdf(
-    content \\ SlPdfWeb.PdfView.hello_world,
+    content \\ SlReportWeb.PdfView.hello_world,
     callback \\ "example.pdf",
     opts \\ []
   ), do: GenServer.call(__MODULE__, {:print_to_pdf, content, callback, opts}, @print_timeout)

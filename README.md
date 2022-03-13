@@ -1,4 +1,4 @@
-# SlPdf
+# SlReport
 
 **A pdf generator for erlang depending on elixir**
 
