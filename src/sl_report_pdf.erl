@@ -11,7 +11,7 @@ print(Template, Callback) when is_binary(Template) andalso is_binary(Callback) -
 
 test()  ->
     Template = sl_report_view:template_hello_world(),
-    Callback = <<"example.pdf">>,
+    Callback = <<"../priv/reports/example.pdf">>,
     print(Template, Callback).
 
 %%%=============================================================================
