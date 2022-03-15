@@ -1,67 +1,53 @@
 defmodule SlReport.Pdf.Printer do
   use GenServer
 
-  alias SlReportWeb.PdfView
-
   @print_timeout 60_000
+
+  alias SlReportWeb.PdfView
 
   ## Client API
 
-  def start_link(init_arg \\ []) do
-    GenServer.start_link(__MODULE__, init_arg, name: __MODULE__)
+  def start_link(init_arg) do
+    GenServer.start_link(__MODULE__, init_arg)
   end
 
-  def print(content, callback, opts) do
-    GenServer.cast(__MODULE__, {:print, content, callback, opts})
+  # Dynamic supervisor expects start_link/2
+  def start_link([], init_arg) do
+    start_link(init_arg)
   end
 
-  def test(n_columns, n_rows) do
-    GenServer.cast(__MODULE__, {:test, n_columns, n_rows})
-  end
-
-  def send_pdf(pid, gen_pdf_fun) when is_function(gen_pdf_fun, 0) do
-    spawn(fn ->
-      {microseconds, pdf_result} = :timer.tc(gen_pdf_fun)
-      seconds = microseconds_to_seconds(microseconds)
-      pdf = {pdf_result, {:seconds, seconds}}
-
-      GenServer.call(pid, {:pdf_received, pdf}, @print_timeout)
-    end)
+  def print(pid) do
+    GenServer.cast(pid, :print)
   end
 
   ## Callbacks
 
   @impl true
-  def init(init_arg), do: {:ok, init_arg}
+  def init(init_arg) do
+    {:ok, init_arg}
+  end
 
   @impl true
-  def handle_cast({:print, content, callback, opts}, state) do
-    self_send_pdf(fn ->
-      content |> PdfView.print(callback, opts)
+  def handle_cast(:print, [content, callback, opts] = state) do
+    pid = IO.inspect self(), label: "#{inspect self()} is printing"
+
+    Task.start_link(fn ->
+      {microseconds, pdf_result} = :timer.tc(fn ->
+        PdfView.print(content, callback, opts)
+      end)
+      seconds = microseconds / 1_000_000
+      pdf = {pdf_result, {:seconds, seconds}}
+
+      GenServer.call(pid, {:pdf_ready, pdf}, @print_timeout)
     end)
 
     {:noreply, state}
   end
 
-  def handle_cast({:test, n_columns, n_rows}, state) do
-    self_send_pdf(fn ->
-      PdfView.test(n_columns, n_rows)
-    end)
-
-    {:noreply, state}
-  end
-
   @impl true
-  def handle_call({:pdf_received, pdf}, _from, state) do
-    IO.inspect pdf, label: "Pdf received"
+  def handle_call({:pdf_ready, pdf}, _from, state) do
+    IO.inspect pdf, label: "#{inspect self()} received pdf"
 
-    {:reply, pdf, state}
+    {:stop, :normal, pdf, state}
   end
-
-  ## Internal functions
-
-  defp microseconds_to_seconds(microseconds), do: microseconds / 1_000_000
-
-  defp self_send_pdf(fun), do: self() |> send_pdf(fun)
-
 end
