@@ -3,6 +3,8 @@ defmodule SlReport.Pdf do
 
   alias SlReportWeb.PdfView
 
+  @timeout :timer.minutes(2)
+
   def start_link(chromic_pdf_opts) do
     Supervisor.start_link(__MODULE__, chromic_pdf_opts, name: __MODULE__)
   end
@@ -37,7 +39,7 @@ defmodule SlReport.Pdf do
 
         IO.inspect pdf
       end,
-      timeout: 60_0000
+      timeout: @timeout
     )
   end
 
