@@ -1,7 +1,6 @@
 defmodule SlReport.Pdf do
   use Supervisor
 
-  alias SlReport.Pdf.PrinterSup
   alias SlReportWeb.PdfView
 
   def start_link(chromic_pdf_opts) do
@@ -13,8 +12,8 @@ defmodule SlReport.Pdf do
     children = [
       # Start the ChromicPDF supervisor
       {ChromicPDF, chromic_pdf_opts},
-      # PDF printer supervisor
-      PrinterSup
+      # PDF task supervisor
+      {Task.Supervisor, name: SlReport.Pdf.TaskSupervisor},
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -25,7 +24,21 @@ defmodule SlReport.Pdf do
     callback \\ "priv/reports/example.pdf",
     opts \\ []
   ) do
-    PrinterSup.print([content, callback, opts])
+    Task.Supervisor.start_child(
+      SlReport.Pdf.TaskSupervisor,
+      fn ->
+        IO.inspect self(), label: "#{inspect self()} is printing"
+
+        {microseconds, pdf_result} = :timer.tc(fn ->
+          PdfView.print(content, callback, opts)
+        end)
+        seconds = microseconds / 1_000_000
+        pdf = {pdf_result, {:seconds, seconds}}
+
+        IO.inspect pdf
+      end,
+      timeout: 60_0000
+    )
   end
 
   def test(
