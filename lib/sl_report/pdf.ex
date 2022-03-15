@@ -3,7 +3,7 @@ defmodule SlReport.Pdf do
 
   alias SlReportWeb.PdfView
 
-  @timeout :timer.minutes(2)
+  @timeout :timer.minutes(5)
 
   def start_link(chromic_pdf_opts) do
     Supervisor.start_link(__MODULE__, chromic_pdf_opts, name: __MODULE__)
@@ -29,7 +29,7 @@ defmodule SlReport.Pdf do
     Task.Supervisor.start_child(
       SlReport.Pdf.TaskSupervisor,
       fn ->
-        IO.inspect self(), label: "#{inspect self()} is printing"
+        IO.puts "#{inspect self()} is printing"
 
         {microseconds, pdf_result} = :timer.tc(fn ->
           PdfView.print(content, callback, opts)
